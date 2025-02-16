@@ -1,12 +1,20 @@
-import Image from "next/image";
-import styles from "./page.module.css";
-import NavBar from "@/components/NavBar";
+import ProductCard from "@/components/ProductCard";
+import { Container } from "@mui/material";
+import Grid from "@mui/material/Grid2";
+import React from "react";
 
-export default function Home() {
+export default async function Page() {
+  const data = await fetch("https://dummyjson.com/products");
+  const { products } = await data.json();
   return (
-    <div className={styles.page}>
-      <NavBar/>
-      <h1>Hello Next js</h1>
-    </div>
+    <Container >
+    <Grid container spacing={2}>
+      {products.map((product) => (
+        <React.Fragment key={product.id}>
+          <ProductCard product={product}/>
+        </React.Fragment>
+      ))}
+    </Grid>
+    </Container>
   );
 }
