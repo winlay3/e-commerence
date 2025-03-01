@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
@@ -7,14 +7,14 @@ import Typography from '@mui/material/Typography';
 import CssBaseline from '@mui/material/CssBaseline';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import Fab from '@mui/material/Fab';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Fade from '@mui/material/Fade';
 import { Slide } from '@mui/material';
 import { ShoppingCart } from '@mui/icons-material';
+import Link from 'next/link';
+import CustomCart from './CustomCart';
 
 function HideOnScroll(props) {
   const { children, window } = props;
@@ -52,7 +52,7 @@ function ScrollTop(props) {
       <Box
         onClick={handleClick}
         role="presentation"
-        sx={{ position: 'fixed', bottom: 65, right: 16,}}
+        sx={{ position: 'fixed', bottom: 65, right: 16 }}
       >
         {children}
       </Box>
@@ -72,25 +72,18 @@ export default function NavBar(props) {
       <HideOnScroll>
         <AppBar sx={{ bgcolor: 'cyan' }}>
           <Toolbar>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              sx={{ mr: 2 }}
-            >
-              <MenuIcon />
-            </IconButton>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1,fontWeight: 'bold', fontSize: '1.5rem' }}>
-              Alibaba
-            </Typography>
-            <IconButton size="large"
-              edge="end"
-              color="inherit"
-              aria-label="cart">
-              <ShoppingCart/>
-            </IconButton>
-           
+            {/* Wrap Alibaba text with a Box that grows */}
+            <Box sx={{ flexGrow: 1 }}>
+              <Link href="/" passHref style={{ textDecoration: 'none', color: 'inherit' }}>
+                <Typography variant="h6" component="div" sx={{ fontWeight: 'bold', fontSize: '1.5rem', cursor: 'pointer' }}>
+                  Alibaba
+                </Typography>
+              </Link>
+            </Box>
+            <CustomCart/>
+            {/* <IconButton size="large" edge="end" color="inherit" aria-label="cart">
+              <ShoppingCart />
+            </IconButton> */}
           </Toolbar>
         </AppBar>
       </HideOnScroll>
