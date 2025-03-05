@@ -5,15 +5,18 @@ import Image from "next/image";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCart, decreaseQuantity, increaseQuantity } from "@/redux/productsSlice";
+import { addToCart, addToFavorite, decreaseQuantity, increaseQuantity, removeFromFavorite } from "@/redux/productsSlice";
 import Link from "next/link";
 
 function ProductDetail() {
   const [product, setProduct] = useState(null);
-  const [isFavorite, setIsFavorite] = useState(false); // To track favorite status
+  // const [isFavorite, setIsFavorite] = useState(false); // To track favorite status
   const { id } = useParams();
   const dispatch = useDispatch();
   const cart = useSelector((state) => state.productItems.cart)
+  const favorites = useSelector((state) => state.productItems.favorites || {});
+  // const isFavorite = favorites[product?.id] || false;
+  const isFavorite = product ? favorites[product.id] || false : false;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,6 +34,13 @@ function ProductDetail() {
 
   const roundedRating = Math.round(product.rating);
 
+  const handleFavoriteClick = () => {
+    if (isFavorite) {
+      dispatch(removeFromFavorite(product.id));
+    }else {
+      dispatch(addToFavorite(product.id))
+    }
+  }
   return (
     <Box sx={{ display: "flex", justifyContent: "center", mt: 3 }}>
       <Card sx={{ maxWidth: 600, p: 3, boxShadow: 3, borderRadius: "16px" }}>
@@ -62,11 +72,11 @@ function ProductDetail() {
               </Typography>
             </Box>
 
-            {/* Favorite button on the right with bigger icon */}
+            {/* Favorite button */}
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <IconButton
                 color={isFavorite ? "error" : "default"} // Color changes based on favorite status
-                onClick={() => setIsFavorite(!isFavorite)}
+                onClick={handleFavoriteClick}
                 size="large" // Increase the size of the favorite icon
               >
                 {isFavorite ? <Favorite /> : <FavoriteBorder />} {/* Change icon based on favorite status */}

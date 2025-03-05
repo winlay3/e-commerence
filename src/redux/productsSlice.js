@@ -4,7 +4,9 @@ const productsSlice = createSlice({
     name: "products",
     initialState: {
         products: [],
-        cart: {}
+        cart: {},
+        quantities: {},
+        favorites: {}
     },
     reducers: {
         setProducts: (state, action) => {
@@ -15,6 +17,10 @@ const productsSlice = createSlice({
 
             state.cart[id] = (state.cart[id] || 0) +1;
             
+        },
+        removeFromCart: (state,action) => {
+            const id = action.payload;
+            delete state.cart[id];
         },
         increaseQuantity: ( state,action) => {
             const id = action.payload;
@@ -29,8 +35,16 @@ const productsSlice = createSlice({
             }else {
                 delete state.cart[id];
             }
+        },
+        addToFavorite: (state,action) => {
+            const id = action.payload;
+            state.favorites[id] = true;
+        },
+        removeFromFavorite: (state,action) => {
+            const id = action.payload;
+            delete state.favotites[id];
         }
     }
 })
-export const{setProducts,addToCart,increaseQuantity,decreaseQuantity} = productsSlice.actions;
+export const{setProducts,addToCart,removeFromCart,increaseQuantity,decreaseQuantity,addToFavorite,removeFromFavorite} = productsSlice.actions;
 export default productsSlice.reducer;

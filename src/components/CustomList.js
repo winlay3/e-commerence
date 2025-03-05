@@ -9,7 +9,7 @@ import Image from 'next/image';
 import { Box, Button, IconButton } from '@mui/material';
 import { AddCircleOutlineOutlined, DeleteOutline, RemoveCircleOutline } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
-import { decreaseQuantity, increaseQuantity } from '@/redux/productsSlice';
+import { decreaseQuantity, increaseQuantity, removeFromCart } from '@/redux/productsSlice';
 
 export default function CustomList({product}) {
   const dispatch = useDispatch();
@@ -71,6 +71,7 @@ export default function CustomList({product}) {
           color="error"
           size='small'
           startIcon={<DeleteOutline />}
+          onClick={() => dispatch(removeFromCart(product.id))}
         >
           Remove
         </Button>

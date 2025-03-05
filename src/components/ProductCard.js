@@ -77,13 +77,13 @@ function ProductCard({ product }) {
               </Link>
             </Box>
             
-              {cart[product.id] && (
+              {/* {cart[product.id] && (
                   <Box>
                     <Button variant="contained" size="small" onClick={() => dispatch(decreaseQuantity(product.id))}> - </Button>
                     <Typography component={"span"} sx={{mx: 2}}>{cart[product.id]}</Typography>
                     <Button variant="contained" size="small" onClick={() => dispatch(increaseQuantity(product.id))}> + </Button>
                   </Box>
-              )}
+              )} */}
             
           
         </Card>
